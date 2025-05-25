@@ -1,6 +1,7 @@
 #include "hblk_crypto.h"
 #include <sys/stat.h>
 #include <unistd.h>
+#include <string.h>
 
 /**
  * ec_save - saves a key to a file
