@@ -16,7 +16,7 @@ int ec_verify(EC_KEY const *key,
 	      size_t msglen,
 	      sig_t const *sig)
 {
-	if (!key || !msg || !sig)
+	if (!key || !msg || !sig || sig->len < 1)
 		return (0);
 
 	if (!ECDSA_verify(0,
