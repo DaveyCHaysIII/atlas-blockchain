@@ -10,7 +10,7 @@
  * Return: pointer to new EC_KEY or NULL
  */
 
-int ec_load(char const *folder)
+EC_KEY *ec_load(char const *folder)
 {
 	struct stat st;
 	EC_KEY *key;
@@ -21,7 +21,7 @@ int ec_load(char const *folder)
 	char const *file_priv_name = "/key.pem";
 
 	if (!folder)
-		return (-1);
+		return (NULL);
 
 	key == NULL;
 	strcpy(file_priv_path, folder);
@@ -41,6 +41,6 @@ int ec_load(char const *folder)
 	PEM_read_ECPrivateKey(fd, key, NULL, NULL);
 	fclose(fd);
 
-	return (0);
+	return (key);
 }
 
