@@ -31,11 +31,11 @@ int ec_save(EC_KEY *key, char const *folder)
 	strcat(file_priv_path, file_priv_name);
 	strcat(file_pub_path, file_pub_name);
 
-	fd = fopen(file_priv_path, "w+");
+	fd = fopen(file_pub_path, "w+");
 	PEM_write_EC_PUBKEY(fd, key);
 	fclose(fd);
 
-	fd = fopen(file_pub_path, "w+");
+	fd = fopen(file_priv_path, "w+");
 	PEM_write_ECPrivateKey(fd, key, NULL, NULL, 0, NULL, NULL);
 	fclose(fd);
 
