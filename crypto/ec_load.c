@@ -23,7 +23,7 @@ EC_KEY *ec_load(char const *folder)
 	if (!folder)
 		return (NULL);
 
-	key == NULL;
+	key = NULL;
 	strcpy(file_priv_path, folder);
 	strcpy(file_pub_path, folder);
 	strcat(file_priv_path, file_priv_name);
@@ -38,7 +38,7 @@ EC_KEY *ec_load(char const *folder)
 	fd = fopen(file_priv_path, "w+");
 	if (!fd)
 		return (NULL);
-	PEM_read_ECPrivateKey(fd, key, NULL, NULL);
+	PEM_read_ECPrivateKey(fd, &key, NULL, NULL);
 	fclose(fd);
 
 	return (key);
