@@ -28,13 +28,13 @@ EC_KEY *ec_load(char const *folder)
 	strcat(file_priv_path, file_priv_name);
 	strcat(file_pub_path, file_pub_name);
 
-	fd = fopen(file_pub_path, "w+");
+	fd = fopen(file_pub_path, "r");
 	if (!fd)
 		return (NULL);
 	PEM_read_EC_PUBKEY(fd, &key, NULL, NULL);
 	fclose(fd);
 
-	fd = fopen(file_priv_path, "w+");
+	fd = fopen(file_priv_path, "r");
 	if (!fd)
 		return (NULL);
 	PEM_read_ECPrivateKey(fd, &key, NULL, NULL);
