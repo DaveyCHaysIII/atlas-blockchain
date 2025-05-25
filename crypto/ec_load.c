@@ -12,7 +12,6 @@
 
 EC_KEY *ec_load(char const *folder)
 {
-	struct stat st;
 	EC_KEY *key;
 	FILE *fd;
 	char file_pub_path[1024];
