@@ -17,6 +17,8 @@ int main(void)
 
     blockchain = blockchain_deserialize("save.hblk");
 
+    if (!blockchain)
+	    printf("something went wrong cap'n\n");
     _blockchain_print_brief(blockchain);
     blockchain_destroy(blockchain);
 

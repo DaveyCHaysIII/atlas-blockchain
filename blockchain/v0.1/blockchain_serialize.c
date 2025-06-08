@@ -23,8 +23,8 @@ int blockchain_serialize(blockchain_t const *blockchain, char const *path)
 	if (!fd)
 		return (-1);
 
-	memcpy((void *)&header.hblk_magic, MAGIC, 4);
-	memcpy((void *)&header.hblk_version, VERSION, 3);
+	memcpy((void *)header.hblk_magic, MAGIC, 4);
+	memcpy((void *)header.hblk_version, VERSION, 3);
 	header.hblk_endian = _get_endianness();
 	blk_count = llist_size(blockchain->chain);
 	memcpy(&header.hblk_blocks, &blk_count, sizeof(uint32_t));

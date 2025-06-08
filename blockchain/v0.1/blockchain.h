@@ -9,6 +9,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <time.h>
@@ -104,7 +105,7 @@ typedef struct block_s
 
 typedef struct __attribute__((__packed__)) blockchain_header_s
 {
-	uint32_t hblk_magic;    /* HBLK or 48 42 4c 4b*/
+	uint8_t  hblk_magic[4];    /* HBLK or 48 42 4c 4b*/
 	uint8_t  hblk_version[3];  /* X.Y, both are 0-9 ex. 1.5 */
 	uint8_t  hblk_endian;   /* 1 little (reverse order) 2 big (in order) endian*/
 	uint32_t hblk_blocks;   /* num blocks, blocks begin at 0xC*/
