@@ -13,10 +13,10 @@ block_t *block_create(block_t const *prev,
 		      int8_t const *data,
 		      uint32_t data_len)
 {
+	block_t *new_block;
+
 	if (!prev || !data || !data_len)
 		return (NULL);
-
-	block_t *new_block;
 
 	new_block = calloc(1, sizeof(block_t));
 	if (!new_block)

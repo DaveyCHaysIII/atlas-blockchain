@@ -101,7 +101,9 @@ int check_hash(block_t const *block, uint8_t *buffer)
  */
 void print_hash(uint8_t const *hash)
 {
-	for (int i = 0; i < SHA256_DIGEST_LENGTH; ++i)
+	int i;
+
+	for (i = 0; i < SHA256_DIGEST_LENGTH; ++i)
 		fprintf(stderr, "%02x", hash[i]);
 	fprintf(stderr, "\n");
 }
