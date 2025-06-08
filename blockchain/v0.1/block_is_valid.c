@@ -45,7 +45,7 @@ int block_is_valid(block_t const *block, block_t const *prev_block)
 	}
 	if (block->info.index != prev_block->info.index + 1)
 	{
-		fprintf("Indecies are incorrect\n");
+		fprintf(stderr, "Indecies are incorrect\n");
 		return (-1);
 	}
 	if (check_hash(prev_block, prev_hash) != 0 ||
