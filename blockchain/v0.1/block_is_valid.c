@@ -20,12 +20,8 @@ int block_is_valid(block_t const *block, block_t const *prev_block)
 
 	if (!block)
 		return (-1);
-	fprintf(stderr, "block index: %d\n", block->info.index);
 	if (!prev_block && block->info.index != 0)
-	{
-		fprintf(stderr, "no prev block/block not genesis");
 		return (-1);
-	}
 	if (block->info.index == 0)
 	{
 		if (check_genesis(block) != 0)
@@ -51,7 +47,9 @@ int block_is_valid(block_t const *block, block_t const *prev_block)
 	if (check_hash(prev_block, prev_hash) != 0 ||
 	    check_hash(block, cmp_hash) != 0)
 		return (-1);
-	if (memcmp(prev_block->hash, block->info.prev_hash, SHA256_DIGEST_LENGTH) != 0)
+	if (memcmp(prev_block->hash,
+		   block->info.prev_hash,
+		   SHA256_DIGEST_LENGTH) != 0)
 		return (-1);
 	return (0);
 }
