@@ -51,6 +51,8 @@ int block_is_valid(block_t const *block, block_t const *prev_block)
 	if (check_hash(prev_block, prev_hash) != 0 ||
 	    check_hash(block, cmp_hash) != 0)
 		return (-1);
+	if (memcmp(prev_block->hash, block->info.prev_hash, SHA256_DIGEST_LENGTH) != 0)
+		return (-1);
 	return (0);
 }
 
