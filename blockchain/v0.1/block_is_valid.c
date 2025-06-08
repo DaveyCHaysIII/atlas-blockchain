@@ -19,36 +19,34 @@ int block_is_valid(block_t const *block, block_t const *prev_block)
 	uint8_t cmp_hash[SHA256_DIGEST_LENGTH];
 
 	if (!block)
-	{
-		fprintf(stderr, "no block!\n");
 		return (-1);
-	}
 	fprintf(stderr, "block index: %d\n", block->info.index);
 	if (!prev_block && block->info.index != 0)
 	{
 		fprintf(stderr, "no prev block/block not genesis");
 		return (-1);
 	}
-	if (block->info.index < 2)
+	if (block->info.index == 0)
 	{
-		if (block->info.index == 0)
+		if (check_genesis(block) != 0)
 		{
-			fprintf(stderr, "block should be genesis\n");
-			if (check_genesis(block) != 0)
-			{
-				printf("block isn't genesis!\n");
-				return (-1);
-			}
-			return (0);
+			printf("block isn't genesis!\n");
+			return (-1);
 		}
-		else if (block->info.index == 1)
+		return (0);
+	}
+	else if (block->info.index == 1)
+	{
+		if (check_genesis(prev_block) != 0)
 		{
-			if (check_genesis(prev_block) != 0)
-			{
-				fprintf(stderr, "prev block isn't genesis!\n");
-				return (-1);
-			}
+			fprintf(stderr, "prev block isn't genesis!\n");
+			return (-1);
 		}
+	}
+	if (block->info.index != prev_block->info.index + 1)
+	{
+		fprintf("Indecies are incorrect\n");
+		return (-1);
 	}
 	if (check_hash(prev_block, prev_hash) != 0 ||
 	    check_hash(block, cmp_hash) != 0)
