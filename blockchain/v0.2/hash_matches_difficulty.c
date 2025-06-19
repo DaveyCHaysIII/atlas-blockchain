@@ -14,8 +14,11 @@ int hash_matches_difficulty(uint8_t const hash[SHA256_DIGEST_LENGTH],
 	uint32_t bytes, remain, i;
 	uint8_t mask;
 
-	if (!hash || !difficulty)
+	if (!hash)
 		return (0);
+
+	if (!difficulty)
+		return (1);
 
 	bytes = difficulty / 8;
 	remain = difficulty % 8;

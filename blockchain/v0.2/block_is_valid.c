@@ -81,8 +81,14 @@ int check_genesis(block_t const *block)
 
 int check_hash(block_t const *block, uint8_t *buffer)
 {
-
 	block_hash(block, buffer);
+	if (!hash_matches_difficulty(block->hash, block->info.difficulty))
+	{
+		fprintf(stderr, "difficulty doesn't match: %u\n", block->info.difficulty);
+		print_hash(block->hash);
+		print_hash(buffer);
+		return (-1);
+	}
 	if (memcmp(block->hash, buffer, SHA256_DIGEST_LENGTH) != 0)
 	{
 		fprintf(stderr, "hash's don't match\n");
