@@ -26,10 +26,8 @@ uint32_t blockchain_difficulty(blockchain_t const *blockchain)
 		"Current Index: %d\nprev_adjust_index: %d\n",
 		size,
 		prev_adjust_index);
-	if (current->info.index &&
-	    prev_adjust_index &&
-	    (prev_adjust_index == 1 ||
-	    prev_adjust_index % DIFFICULTY_ADJUSTMENT_INTERVAL == 0))
+	if (current->info.index % DIFFICULTY_ADJUSTMENT_INTERVAL == 0 &&
+	    current->info.index != 0)
 	{
 		fprintf(stderr, "Made it, index: %d\n", size);
 		prev_adjust = llist_get_node_at(blockchain->chain,
