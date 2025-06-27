@@ -21,7 +21,7 @@
 	"\xc5\x2c\x26\xc8\xb5\x46\x16\x39\x63\x5d\x8e\xdf\x2a\x97\xd4\x8d" \
 	"\x0c\x8e\x00\x09\xc8\x17\xf2\xb1\xd3\xd7\xff\x2f\x04\x51\x58\x03"
 #define MAGIC "\x48\x42\x4c\x4b"
-#define VERSION "0.3"
+#define VERSION "0.1"
 #define HBLK_ENDIAN ((_get_endianness() == 1) ? "1" : "2")
 #define DATA "Holberton School"
 #define BLOCK_OFFSET 0xC
@@ -32,10 +32,12 @@
  * struct blockchain_s - Blockchain structure
  *
  * @chain: Linked list of pointers to block_t
+ * @unspent: Linked list of unspent transaction outputs
  */
 typedef struct blockchain_s
 {
 	llist_t     *chain;
+	llist_t	    *unspent;
 } blockchain_t;
 
 
@@ -87,14 +89,17 @@ typedef struct block_data_s
  *
  * @info: Block info
  * @data: Block data
+ * @transactions: List of transactions
  * @hash: 256-bit digest of the Block, to ensure authenticity
  */
 typedef struct block_s
 {
 	block_info_t    info; /* This must stay first */
 	block_data_t    data; /* This must stay second */
+	llist_t         *transactions;
 	uint8_t     hash[SHA256_DIGEST_LENGTH];
 } block_t;
+
 
 /**
  * struct blockchain_header_s - blockchain header structure
@@ -153,5 +158,8 @@ int hash_matches_difficulty(uint8_t const hash[SHA256_DIGEST_LENGTH],
 			    uint32_t difficulty);
 void block_mine(block_t *block);
 uint32_t blockchain_difficulty(blockchain_t const *blockchain);
+llist_t *update_unspent(llist_t *transactions,
+			uint8_t block_hash[SHA256_DIGEST_LENGTH],
+			llist_t *all_unspent);
 
 #endif
