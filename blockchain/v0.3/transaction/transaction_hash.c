@@ -42,6 +42,11 @@ uint8_t *transaction_hash(
 		counter += 32;
 		len_out--;
 	}
+	for (i = 0; i < total_size; i++)
+	{
+		printf("%02x", hash_buf_temp[i]);
+		printf("\n");
+	}
 	SHA256(hash_buf_temp, total_size, hash_buf);
 	return (hash_buf);
 }
