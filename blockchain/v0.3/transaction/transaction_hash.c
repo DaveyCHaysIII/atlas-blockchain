@@ -21,7 +21,7 @@ uint8_t *transaction_hash(
 	len_in = llist_size(transaction->inputs);
 	len_out = llist_size(transaction->outputs);
 
-	total_size = (96 * len_in) + (64 * len_out);
+	total_size = (96 * len_in) + (32 * len_out);
 	hash_buf_temp = calloc(1, total_size);
 
 	counter = 0;
