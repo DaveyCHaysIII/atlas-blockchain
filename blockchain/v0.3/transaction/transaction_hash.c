@@ -38,8 +38,8 @@ uint8_t *transaction_hash(
 		current_out = (tx_out_t *)llist_get_node_at(
 				transaction->outputs,
 				i);
-		memcpy(hash_buf_temp + counter, current_out, 64);
-		counter += 64;
+		memcpy(hash_buf_temp + counter, current_out, 32);
+		counter += 32;
 		len_out--;
 	}
 	SHA256(hash_buf_temp, total_size, hash_buf);
