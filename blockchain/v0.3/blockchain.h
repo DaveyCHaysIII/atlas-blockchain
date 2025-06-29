@@ -3,6 +3,7 @@
 
 #include <openssl/sha.h>
 #include "provided/endianness.h"
+#include "transaction/transaction.h"
 #include <llist.h>
 #include <stdio.h>
 #include <string.h>

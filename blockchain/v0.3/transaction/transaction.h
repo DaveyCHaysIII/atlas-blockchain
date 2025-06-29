@@ -1,9 +1,22 @@
 #ifndef TRANSACTION_H
 #define TRANSACTION_H
 
-
 #define MAX_TRANSACTIONS 15
 #define COINBASE_AMOUNT 50
+
+#include <stdlib.h>
+#include "provided/endianness.h"
+#include "../../../crypto/hblk_crypto.h"
+#include <llist.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <time.h>
 
 
 /**
@@ -16,7 +29,7 @@
  */
 typedef struct transaction_s
 {
-	uin8_t id[SHA256_DIGEST_LENGTH];
+	uint8_t id[SHA256_DIGEST_LENGTH];
 	llist_t *inputs;
 	llist_t *outputs;
 } transaction_t;
@@ -73,11 +86,6 @@ typedef struct unspent_tx_out_s
     uint8_t     tx_id[SHA256_DIGEST_LENGTH];
     tx_out_t    out;
 } unspent_tx_out_t;
-
-int _transaction_print_brief_loop(transaction_t const *transaction,
-	unsigned int idx, char const *indent);
-static int _tx_in_print(tx_in_t const *in, unsigned int idx,
-	char const *indent);
 
 tx_out_t *tx_out_create(uint32_t amount, uint8_t const pub[EC_PUB_LEN]);
 unspent_tx_out_t *unspent_tx_out_create(uint8_t block_hash[SHA256_DIGEST_LENGTH],
