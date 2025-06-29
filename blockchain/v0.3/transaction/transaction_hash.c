@@ -44,8 +44,8 @@ uint8_t *transaction_hash(
 				i);
 		memcpy(hash_buf_temp + counter, current_out->hash, 32);
 		counter += 32;
-		len_out--;
 	}
 	SHA256(hash_buf_temp, total_size, hash_buf);
+	free(hash_buf_temp);
 	return (hash_buf);
 }
