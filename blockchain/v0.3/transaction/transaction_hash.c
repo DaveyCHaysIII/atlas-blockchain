@@ -30,15 +30,19 @@ uint8_t *transaction_hash(
 		current_in = (tx_in_t *)llist_get_node_at(
 				transaction->inputs,
 				i);
-		memcpy(hash_buf_temp + counter, current_in, 96);
-		counter += 96;
+		memcpy(hash_buf_temp + counter, current_in->block_hash, 32);
+		counter += 32;
+		memcpy(hash_buf_temp + counter, current_in->tx_id, 32);
+		counter += 32;
+		memcpy(hash_buf_temp + counter, current_in->tx_out_hash, 32);
+		counter += 32;
 	}
 	for (i = 0; i < len_out; i++)
 	{
 		current_out = (tx_out_t *)llist_get_node_at(
 				transaction->outputs,
 				i);
-		memcpy(hash_buf_temp + counter, current_out, 32);
+		memcpy(hash_buf_temp + counter, current_out->hash, 32);
 		counter += 32;
 		len_out--;
 	}
