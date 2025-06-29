@@ -3,7 +3,7 @@
 /**
  * unspent_tx_out_create - creates and initializes a new unspent_tx_out_t
  * @block_hash: the hash of the block this references
- * @tx_it: the id of the transaction_t this references
+ * @tx_id: the id of the transaction_t this references
  * @out: the actual output we are referencing
  *
  * Return: pointer to new unspent_tx_out_t or NULL
