@@ -42,39 +42,24 @@ sig_t *tx_in_sign(tx_in_t *in,
 	unsigned int sig_len;
 
 	if (!in || !tx_id || !sender || !all_unspent)
-	{
-		printf("1\n");
 		return (NULL);
-	}
 
 	sig_len = 0;
 	utxo = NULL;
 
 	utxo = llist_find_node(all_unspent, match_unspent, in->tx_out_hash);
 	if (!utxo)
-	{
-		printf("2\n");
 		return (NULL);
-	}
 
 	if (!ec_to_pub(sender, derived_pub))
-	{
-		printf("3\n");
 		return (NULL);
-	}
 
 	if (memcmp(derived_pub, utxo->out.pub, EC_PUB_LEN) != 0)
-	{
-		printf("4\n");
 		return (NULL);
-	}
 
 	if (!ECDSA_sign(0, tx_id, SHA256_DIGEST_LENGTH,
 			in->sig.sig, &sig_len, (EC_KEY *)sender))
-	{
-		printf("5\n");
 		return (NULL);
-	}
 	in->sig.len = (uint8_t)sig_len;
 	return (&in->sig);
 }
