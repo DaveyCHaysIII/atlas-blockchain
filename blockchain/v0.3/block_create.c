@@ -33,6 +33,7 @@ block_t *block_create(block_t const *prev,
 	       data,
 	       data_len > BLOCKCHAIN_DATA_MAX ? BLOCKCHAIN_DATA_MAX : data_len);
 	new_block->data.len = data_len;
+	new_block->transactions = llist_create(MT_SUPPORT_FALSE);
 
 	return (new_block);
 }
