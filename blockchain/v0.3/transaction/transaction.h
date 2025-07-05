@@ -87,6 +87,28 @@ typedef struct unspent_tx_out_s
     tx_out_t    out;
 } unspent_tx_out_t;
 
+
+/**
+ * struct tx_data_s - tracks data of transaction
+ * Description: holds wallet total and transaction details
+ *
+ * @pub: the public key (derived from private)
+ * @amount_total: the sum of coins available to wallet
+ * @needed: the amount needed for this transaction
+ * @txt: pointer to the transaction struct
+ * @sender: the private key
+ * @all_unspent: the pointer to the unspent list
+ */
+typedef struct tx_data_s
+{
+	uint8_t pub[EC_PUB_LEN];
+	uint32_t amount_total;
+	uint32_t needed;
+	transaction_t *txt;
+	EC_KEY const *sender;
+	llist_t *all_unspent;
+} tx_data_t;
+
 tx_out_t *tx_out_create(uint32_t amount, uint8_t const pub[EC_PUB_LEN]);
 unspent_tx_out_t *unspent_tx_out_create(uint8_t block_hash[SHA256_DIGEST_LENGTH],
 					uint8_t tx_id[SHA256_DIGEST_LENGTH],
@@ -107,5 +129,6 @@ int transaction_is_valid(transaction_t const *transaction,
 transaction_t *coinbase_create(EC_KEY const *receiver, uint32_t block_index);
 int coinbase_is_valid(transaction_t const *coinbase, uint32_t block_index);
 void transaction_destroy(transaction_t *transaction);
+int match_pub(EC_KEY const *priv, uint8_t pub[EC_PUB_LEN]);
 
 #endif
