@@ -29,6 +29,7 @@ blockchain_t *blockchain_create(void)
 		free(genesis);
 		return (NULL);
 	}
+	new_chain->unspent = llist_create(MT_SUPPORT_FALSE);
 	genesis->info.index = 0;
 	genesis->info.difficulty = 0;
 	genesis->info.timestamp = GEN_TIMESTAMP;
