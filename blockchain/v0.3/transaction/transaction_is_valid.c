@@ -14,6 +14,23 @@ static int match_tx_out_hash(llist_node_t node, void *hash)
 		SHA256_DIGEST_LENGTH) == 0);
 }
 
+
+/**
+ * match_tx_out_hash_2 - matches hash
+ * @node: the node in the list
+ * @i: unused iterator
+ * @hash: the hash to check match
+ *
+ * Return: 0 or 1
+ */
+static int match_tx_out_hash_2(llist_node_t node, unsigned int i, void *hash)
+{
+	(void)i;
+	return (memcmp(((unspent_tx_out_t *)node)->out.hash,
+		hash,
+		SHA256_DIGEST_LENGTH) == 0);
+}
+
 /**
  * validate_input_sig - validates input signatures
  * @in: the input in question
@@ -79,6 +96,10 @@ int transaction_is_valid(transaction_t const *transaction,
 			return (0);
 		if (!validate_input_sig(in, transaction,
 					all_unspent, &total_input))
+			return (0);
+		if (!llist_for_each(all_unspent,
+				    (node_func_t)match_tx_out_hash_2,
+				    in->tx_out_hash))
 			return (0);
 	}
 	n_out = llist_size(transaction->outputs);
