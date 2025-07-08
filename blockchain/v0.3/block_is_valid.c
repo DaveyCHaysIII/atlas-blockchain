@@ -51,7 +51,7 @@ int block_is_valid(block_t const *block, block_t const *prev_block,
 	if (llist_for_each(block->transactions,
 			   (node_func_t)&trans_valid,
 			   all_unspent))
-		return (1);
+		return (-1);
 	return (0);
 }
 
@@ -59,7 +59,7 @@ int block_is_valid(block_t const *block, block_t const *prev_block,
  * check_genesis - checks if a block is a genesis block
  * @block: the block to check
  *
- * Return: 1 on success, 0 on fail
+ * Return: 0 on success
  */
 
 int check_genesis(block_t const *block)
@@ -103,7 +103,9 @@ int check_hash(block_t const *block, uint8_t *buffer)
 
 int trans_valid(transaction_t *trans, unsigned int i, llist_t *unspent)
 {
-	if (i && !transaction_is_valid(trans, unspent))
+	if (i == 0)
+		continue;
+	if (!transaction_is_valid(trans, unspent))
 		return (1);
 	return (0);
 }
