@@ -104,7 +104,7 @@ int check_hash(block_t const *block, uint8_t *buffer)
 int trans_valid(transaction_t *trans, unsigned int i, llist_t *unspent)
 {
 	if (i == 0)
-		continue;
+		return (0);
 	if (!transaction_is_valid(trans, unspent))
 		return (1);
 	return (0);
