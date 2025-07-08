@@ -1,7 +1,7 @@
 #include "blockchain.h"
 
 
-int trans_valid(transaction_t *trans, unsigned int i, llist_t *unspent)
+int trans_valid(transaction_t *trans, unsigned int i, llist_t *unspent);
 int check_hash(block_t const *block, uint8_t *buffer);
 int check_genesis(block_t const *block);
 
@@ -106,7 +106,7 @@ int check_hash(block_t const *block, uint8_t *buffer)
  * @i: index of transaction
  * @unspent: pointer to the unspent list
  *
- * Return:
+ * Return: 0 or 1
  */
 
 int trans_valid(transaction_t *trans, unsigned int i, llist_t *unspent)
