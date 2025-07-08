@@ -1,7 +1,7 @@
 #include "blockchain.h"
 
 
-void print_hash(uint8_t const *hash);
+int trans_valid(transaction_t *trans, unsigned int i, llist_t *unspent)
 int check_hash(block_t const *block, uint8_t *buffer);
 int check_genesis(block_t const *block);
 
@@ -9,11 +9,13 @@ int check_genesis(block_t const *block);
  * block_is_valid - checks to see if the current block is a valid blockchain
  * @block: pointer to the block to check
  * @prev_block: pointer to the previous block
+ * @all_unspent: pointer to the unspent list
  *
  * Return: 0 or -1
  */
 
-int block_is_valid(block_t const *block, block_t const *prev_block)
+int block_is_valid(block_t const *block, block_t const *prev_block,
+		   llist_t *all_unspent)
 {
 	uint8_t prev_hash[SHA256_DIGEST_LENGTH];
 	uint8_t cmp_hash[SHA256_DIGEST_LENGTH];
@@ -46,6 +48,10 @@ int block_is_valid(block_t const *block, block_t const *prev_block)
 	trans = (transaction_t *)llist_get_head(block->transactions);
 	if (!coinbase_is_valid(trans, block->info.index))
 		return (-1);
+	if (llist_for_each(block->transactions,
+			   (node_func_t)&trans_valid,
+			   all_unspent))
+		return (1);
 	return (0);
 }
 
@@ -94,3 +100,18 @@ int check_hash(block_t const *block, uint8_t *buffer)
 	return (0);
 }
 
+/**
+ * trans_valid - checks if all transactions are valid
+ * @trans: transaction to validate
+ * @i: index of transaction
+ * @unspent: pointer to the unspent list
+ *
+ * Return:
+ */
+
+int trans_valid(transaction_t *trans, unsigned int i, llist_t *unspent)
+{
+	if (i && !transaction_is_valid(trans, unspent))
+		return (1);
+	return (0);
+}
