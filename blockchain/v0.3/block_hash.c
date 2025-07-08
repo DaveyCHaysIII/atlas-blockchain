@@ -1,5 +1,7 @@
 #include "blockchain.h"
 
+static int grab_ids(llist_node_t trans, unsigned int i, void *buffer);
+
 /**
  * block_hash - function that hashes an entire block
  * @block: the block to be hashed
@@ -12,7 +14,7 @@ uint8_t *block_hash(block_t const *block,
 		    uint8_t hash_buf[SHA256_DIGEST_LENGTH])
 {
 	uint8_t *buffer;
-	uint32_t total_size, trans_len, block_mem, i;
+	uint32_t total_size, trans_len, block_mem;
 
 	if (!block || !hash_buf)
 		return (NULL);
