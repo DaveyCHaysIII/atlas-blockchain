@@ -44,8 +44,8 @@ int block_is_valid(block_t const *block, block_t const *prev_block)
 		   SHA256_DIGEST_LENGTH) != 0)
 		return (-1);
 	trans = (transaction_t *)llist_get_head(block->transactions);
-	if (!coinbase_is_valid(trans,
-			block->info.index);
+	if (!coinbase_is_valid(trans, block->info.index))
+		return (-1);
 	return (0);
 }
 
