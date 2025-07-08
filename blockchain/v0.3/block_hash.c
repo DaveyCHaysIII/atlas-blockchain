@@ -11,7 +11,7 @@
 uint8_t *block_hash(block_t const *block,
 		    uint8_t hash_buf[SHA256_DIGEST_LENGTH])
 {
-	uint8_t *buffer;
+	uint8_t *buffer, *cursor;
 	uint32_t total_size, trans_len, block_mem, i;
 	transaction_t *tx;
 
@@ -25,6 +25,7 @@ uint8_t *block_hash(block_t const *block,
 	buffer = calloc(1, total_size);
 	memcpy(buffer, block, block_mem);
 
+	cursor = buffer;
 	for (i = 0; i < trans_len; i++)
 	{
 		tx = llist_get_node_at(block->transactions, i);
