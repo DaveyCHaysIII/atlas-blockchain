@@ -103,7 +103,7 @@ int check_hash(block_t const *block, uint8_t *buffer)
 
 int trans_valid(void *trans_node, unsigned int i, llist_t *unspent)
 {
-	transaction_t *trans = (transaction_t *)node;
+	transaction_t *trans = (transaction_t *)trans_node;
 	if (i == 0)
 		return (0);
 	if (!transaction_is_valid(trans, unspent))
