@@ -13,6 +13,7 @@ uint8_t *block_hash(block_t const *block,
 {
 	uint8_t *buffer;
 	uint32_t total_size, trans_len, block_mem, i;
+	transaction_t *tx;
 
 	if (!block || !hash_buf)
 		return (NULL);
