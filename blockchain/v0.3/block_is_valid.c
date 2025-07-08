@@ -25,25 +25,16 @@ int block_is_valid(block_t const *block, block_t const *prev_block)
 	if (block->info.index == 0)
 	{
 		if (check_genesis(block) != 0)
-		{
-			printf("block isn't genesis!\n");
 			return (-1);
-		}
 		return (0);
 	}
 	else if (block->info.index == 1)
 	{
 		if (check_genesis(prev_block) != 0)
-		{
-			fprintf(stderr, "prev block isn't genesis!\n");
 			return (-1);
-		}
 	}
 	if (block->info.index != prev_block->info.index + 1)
-	{
-		fprintf(stderr, "Indecies are incorrect\n");
 		return (-1);
-	}
 	if (check_hash(prev_block, prev_hash) != 0 ||
 	    check_hash(block, cmp_hash) != 0)
 		return (-1);
@@ -51,6 +42,9 @@ int block_is_valid(block_t const *block, block_t const *prev_block)
 		   block->info.prev_hash,
 		   SHA256_DIGEST_LENGTH) != 0)
 		return (-1);
+	if (!coinbase_is_valid(
+			(transaction_t *)llist_get_head(block->transactions),
+			block->info.index);
 	return (0);
 }
 
@@ -99,17 +93,3 @@ int check_hash(block_t const *block, uint8_t *buffer)
 	return (0);
 }
 
-/**
- * print_hash - helper function for check_hash
- * @hash: the hash buffer to print
- *
- * Return: no return
- */
-void print_hash(uint8_t const *hash)
-{
-	int i;
-
-	for (i = 0; i < SHA256_DIGEST_LENGTH; ++i)
-		fprintf(stderr, "%02x", hash[i]);
-	fprintf(stderr, "\n");
-}
