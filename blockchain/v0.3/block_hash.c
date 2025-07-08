@@ -11,9 +11,8 @@
 uint8_t *block_hash(block_t const *block,
 		    uint8_t hash_buf[SHA256_DIGEST_LENGTH])
 {
-	uint8_t *buffer, *cursor;
+	uint8_t *buffer;
 	uint32_t total_size, trans_len, block_mem, i;
-	transaction_t *tx;
 
 	if (!block || !hash_buf)
 		return (NULL);
@@ -25,14 +24,27 @@ uint8_t *block_hash(block_t const *block,
 	buffer = calloc(1, total_size);
 	memcpy(buffer, block, block_mem);
 
-	cursor = buffer;
-	for (i = 0; i < trans_len; i++)
-	{
-		tx = llist_get_node_at(block->transactions, i);
-		memcpy(cursor, tx->id, SHA256_DIGEST_LENGTH);
-		cursor += SHA256_DIGEST_LENGTH;
-	}
+	llist_for_each(block->transactions, grab_ids, buffer + block_mem);
+
 	SHA256(buffer, total_size, hash_buf);
 	free(buffer);
 	return (hash_buf);
+}
+
+
+/**
+ * grab_ids - grabs the id of transaction and puts it in buffer
+ * @trans: the transaction in question
+ * @i: the index of the transaction
+ * @buffer: the buffer to write to
+ *
+ * Return: 0 on success
+ */
+
+static int grab_ids(llist_node_t trans, unsigned int i, void *buffer)
+{
+	memcpy((uint8_t *)buffer + i * SHA256_DIGEST_LENGTH,
+	       ((transaction_t *)trans)->id, SHA256_DIGEST_LENGTH);
+	return (0);
+
 }
