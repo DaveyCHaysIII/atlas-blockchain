@@ -11,12 +11,26 @@
 uint8_t *block_hash(block_t const *block,
 		    uint8_t hash_buf[SHA256_DIGEST_LENGTH])
 {
+	uint8_t *buffer;
+	uint32_t total_size, trans_len, block_mem, i;
+
 	if (!block || !hash_buf)
 		return (NULL);
 
-	SHA256((unsigned char *)block,
-	       sizeof(block->info) + block->data.len,
-	       hash_buf);
-	return (hash_buf);
+	trans_len = llist_size(block->transaction);
+	block_mem = sizeof(block->info) + block->data.len;
+	total_size = block_mem + (trans_len * SHA256_DIGEST_LENGTH);
 
+	buffer = calloc(1, total_size);
+	memcpy(buffer, block, block_mem);
+
+	for (i = 0; i < trans_len; i++)
+	{
+		tx = llist_get_node_at(block->transactions, i);
+		memcpy(cursor, tx->id, SHA256_DIGEST_LENGTH);
+		cursor += SHA256_DIGEST_LENGTH;
+	}
+	SHA256(buffer, total_size, hash_buf);
+	free(buffer);
+	return (hash_buf);
 }
