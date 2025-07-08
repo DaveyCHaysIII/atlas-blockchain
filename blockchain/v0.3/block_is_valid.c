@@ -65,10 +65,11 @@ int block_is_valid(block_t const *block, block_t const *prev_block,
 int check_genesis(block_t const *block)
 {
 	block_t genesis = {
-		{0, 0, 1537578000, 0, {0}},
-		{"Holberton School", 16},
-		llist_t *transactions,
-		HOLBERTON_HASH};
+		.info = {0, 0, 1537578000, 0, {0}},
+		.data = {"Holberton School", 16},
+		.hash = HOLBERTON_HASH,
+		.transactions = NULL
+		};
 
 	return (memcmp(block, &genesis, sizeof(block_t)));
 }
