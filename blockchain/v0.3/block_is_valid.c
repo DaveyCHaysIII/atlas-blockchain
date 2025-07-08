@@ -1,7 +1,7 @@
 #include "blockchain.h"
 
 
-int trans_valid(transaction_t *trans, unsigned int i, llist_t *unspent);
+int trans_valid(void *trans_node, unsigned int i, llist_t *unspent);
 int check_hash(block_t const *block, uint8_t *buffer);
 int check_genesis(block_t const *block);
 
@@ -101,8 +101,9 @@ int check_hash(block_t const *block, uint8_t *buffer)
  * Return: 0 or 1
  */
 
-int trans_valid(transaction_t *trans, unsigned int i, llist_t *unspent)
+int trans_valid(void *trans_node, unsigned int i, llist_t *unspent)
 {
+	transaction_t *trans = (transaction_t *)node;
 	if (i == 0)
 		return (0);
 	if (!transaction_is_valid(trans, unspent))
