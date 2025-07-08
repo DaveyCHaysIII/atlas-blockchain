@@ -67,6 +67,7 @@ int check_genesis(block_t const *block)
 	block_t genesis = {
 		{0, 0, 1537578000, 0, {0}},
 		{"Holberton School", 16},
+		llist_t *transactions,
 		HOLBERTON_HASH};
 
 	return (memcmp(block, &genesis, sizeof(block_t)));
