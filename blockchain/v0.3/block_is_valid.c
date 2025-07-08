@@ -17,6 +17,7 @@ int block_is_valid(block_t const *block, block_t const *prev_block)
 {
 	uint8_t prev_hash[SHA256_DIGEST_LENGTH];
 	uint8_t cmp_hash[SHA256_DIGEST_LENGTH];
+	transaction_t *trans;
 
 	if (!block)
 		return (-1);
@@ -42,8 +43,8 @@ int block_is_valid(block_t const *block, block_t const *prev_block)
 		   block->info.prev_hash,
 		   SHA256_DIGEST_LENGTH) != 0)
 		return (-1);
-	if (!coinbase_is_valid(
-			(transaction_t *)llist_get_head(block->transactions),
+	trans = (transaction_t *)llist_get_head(block->transactions);
+	if (!coinbase_is_valid(trans,
 			block->info.index);
 	return (0);
 }
