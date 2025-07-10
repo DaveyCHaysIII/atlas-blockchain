@@ -64,14 +64,21 @@ int block_is_valid(block_t const *block, block_t const *prev_block,
 
 int check_genesis(block_t const *block)
 {
-	block_t genesis = {
-		.info = {0, 0, 1537578000, 0, {0}},
-		.data = {"Holberton School", 16},
-		.hash = HOLBERTON_HASH,
-		.transactions = NULL
-		};
+	block_info_t g_info = {0, 0, 1537578000, 0, {0}};
+	block_data_t g_data = {"Holberton School", 16};
+	uint8_t hash[SHA256_DIGEST_LENGTH];
 
-	return (memcmp(block, &genesis, sizeof(block_t)));
+	memcpy(hash, HOLBERTON_HASH, SHA256_DIGEST_LENGTH);
+
+	if (memcmp(&g_info, &block->info, sizeof(block_info_t)) != 0)
+		return (-1);
+	if (memcmp(&g_data, &block->data, sizeof(block_data_t)) != 0)
+		return (-1);
+    	if (memcmp(&hash, &block->hash, SHA256_DIGEST_LENGTH) != 0)
+    		return (-1);
+
+	return (0);
+
 }
 
 /**
