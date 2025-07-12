@@ -73,8 +73,8 @@ int check_genesis(block_t const *block)
 		return (-1);
 	if (memcmp(&g_data, &block->data, sizeof(block_data_t)) != 0)
 		return (-1);
-    	if (memcmp(&hash, &block->hash, SHA256_DIGEST_LENGTH) != 0)
-    		return (-1);
+	if (memcmp(&hash, &block->hash, SHA256_DIGEST_LENGTH) != 0)
+		return (-1);
 
 	return (0);
 
@@ -102,7 +102,7 @@ int check_hash(block_t const *block, uint8_t *buffer)
 
 /**
  * trans_valid - checks if all transactions are valid
- * @trans: transaction to validate
+ * @trans_node: transaction to validate
  * @i: index of transaction
  * @unspent: pointer to the unspent list
  *
@@ -112,6 +112,7 @@ int check_hash(block_t const *block, uint8_t *buffer)
 int trans_valid(void *trans_node, unsigned int i, llist_t *unspent)
 {
 	transaction_t *trans = (transaction_t *)trans_node;
+
 	if (i == 0)
 		return (0);
 	if (!transaction_is_valid(trans, unspent))

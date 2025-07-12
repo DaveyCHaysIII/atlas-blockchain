@@ -13,12 +13,10 @@ static int match_tx_out_hash(llist_node_t node, void *hash)
 		hash,
 		SHA256_DIGEST_LENGTH) == 0)
 	{
-		printf("Hey man, they MATCH\n");
 		return (1);
 	}
 	else
 	{
-		printf("The hash DON'T MATCH\n");
 		return (0);
 	}
 }
