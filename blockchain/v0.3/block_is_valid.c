@@ -1,6 +1,5 @@
 #include "blockchain.h"
 
-
 int trans_valid(void *trans_node, unsigned int i, llist_t *unspent);
 int check_hash(block_t const *block, uint8_t *buffer);
 int check_genesis(block_t const *block);
@@ -91,6 +90,8 @@ int check_genesis(block_t const *block)
 
 int check_hash(block_t const *block, uint8_t *buffer)
 {
+	if (block->info.index == 0)
+		return (0);
 	block_hash(block, buffer);
 	if (!hash_matches_difficulty(block->hash, block->info.difficulty))
 		return (-1);

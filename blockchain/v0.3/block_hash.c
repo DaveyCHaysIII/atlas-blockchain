@@ -15,11 +15,18 @@ uint8_t *block_hash(block_t const *block,
 {
 	uint8_t *buffer;
 	uint32_t total_size, trans_len, block_mem;
+	int trans_len_int;
 
 	if (!block || !hash_buf)
 		return (NULL);
 
 	trans_len = llist_size(block->transactions);
+	trans_len_int = llist_size(block->transactions);
+	if (trans_len_int < 0)
+	{
+		printf("Transaction list malformed\n");
+		return (NULL);
+	}
 	block_mem = sizeof(block->info) + block->data.len;
 	total_size = block_mem + (trans_len * SHA256_DIGEST_LENGTH);
 

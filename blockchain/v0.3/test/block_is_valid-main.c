@@ -14,9 +14,13 @@ static block_t *_add_block(blockchain_t *blockchain, block_t const *prev,
     transaction_t *coinbase;
 
     block = block_create(prev, (int8_t *)data, (uint32_t)strlen(data));
-    block->info.difficulty = 20;
+    if (!block)
+	    printf("NULL_BLOCK\n");
+    block->info.difficulty = 6;
 
     coinbase = coinbase_create(miner, block->info.index);
+    if (!coinbase)
+	    printf("NULL_COINBASE\n");
     llist_add_node(block->transactions, coinbase, ADD_NODE_FRONT);
 
     block_mine(block);

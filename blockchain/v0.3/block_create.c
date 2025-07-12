@@ -21,7 +21,8 @@ block_t *block_create(block_t const *prev,
 	new_block = calloc(1, sizeof(block_t));
 	if (!new_block)
 		return (NULL);
-
+	if (data_len > BLOCKCHAIN_DATA_MAX)
+		data_len = BLOCKCHAIN_DATA_MAX;
 	new_block->info.index = (prev->info.index) + 1;
 	new_block->info.difficulty = 0;
 	new_block->info.timestamp = time(NULL);
